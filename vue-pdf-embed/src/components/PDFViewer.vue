@@ -1,11 +1,3 @@
-<template>
-  <div class="app-content">
-    <div v-for="pageNum in pageNums" :key="pageNum" ref="pageRefs">
-      <vue-pdf-embed v-if="pageVisibility[pageNum]" :source="doc" :page="pageNum" />
-    </div>
-  </div>
-</template>
-
 <script setup>
 import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import VuePdfEmbed, { useVuePdfEmbed } from 'vue-pdf-embed'
@@ -14,23 +6,18 @@ import VuePdfEmbed, { useVuePdfEmbed } from 'vue-pdf-embed'
 import 'vue-pdf-embed/dist/styles/annotationLayer.css'
 import 'vue-pdf-embed/dist/styles/textLayer.css'
 
-const props = defineProps({
-  pdfUrl: { type: String, required: true },
-  initialPage: { type: Number, default: 1 },
-})
-
-const pdfSource = ref(props.pdfUrl)
 const pageRefs = ref([])
 const pageVisibility = ref({})
 let pageIntersectionObserver
 
-const { doc } = useVuePdfEmbed({ source: pdfSource })
+const { doc } = useVuePdfEmbed({
+  source:
+    'https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf',
+})
 
 const pageNums = computed(() =>
   doc.value ? [...Array(doc.value.numPages + 1).keys()].slice(1) : [],
 )
-
-watch(props.pdfUrl, () => {})
 
 const resetPageIntersectionObserver = () => {
   pageIntersectionObserver?.disconnect()
@@ -58,13 +45,15 @@ onBeforeUnmount(() => {
 })
 </script>
 
-<style>
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #ccc;
-}
+<template>
+  <div class="app-content">
+    <div v-for="pageNum in pageNums" :key="pageNum" ref="pageRefs">
+      <VuePdfEmbed v-if="pageVisibility[pageNum]" text-layer :source="doc" :page="pageNum" />
+    </div>
+  </div>
+</template>
 
+<style>
 .app-content {
   padding: 24px 16px;
 }
