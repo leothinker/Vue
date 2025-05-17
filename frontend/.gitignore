@@ -28,3 +28,6 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
