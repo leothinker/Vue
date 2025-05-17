@@ -1,8 +1,8 @@
 {
   "name": "antfu-eslint-config",
+  "type": "module",
   "version": "0.0.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
@@ -17,18 +17,30 @@
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^4.13.1",
     "@tsconfig/node22": "^22.0.1",
     "@types/node": "^22.14.0",
+    "@unocss/eslint-plugin": "^66.1.2",
     "@vitejs/plugin-vue": "^5.2.3",
     "@vue/eslint-config-typescript": "^14.5.0",
     "@vue/tsconfig": "^0.7.0",
     "eslint": "^9.22.0",
+    "eslint-plugin-format": "^1.0.1",
     "eslint-plugin-vue": "~10.0.0",
     "jiti": "^2.4.2",
+    "lint-staged": "^16.0.0",
     "npm-run-all2": "^7.0.2",
+    "simple-git-hooks": "^2.13.0",
     "typescript": "~5.8.0",
+    "unocss": "^66.1.2",
     "vite": "^6.2.4",
     "vite-plugin-vue-devtools": "^7.7.2",
     "vue-tsc": "^2.2.8"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
   }
 }
