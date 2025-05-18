@@ -26,13 +26,17 @@ export default defineConfigWithVueTs(
       'simple-import-sort': simpleImportSort,
     },
     rules: {
-      indent: ['warn', 2],
       'linebreak-style': ['error', 'unix'],
       quotes: ['warn', 'single'],
       // 'vue/no-v-model-argument': ['off'],
       // 'vue/no-multiple-template-root': ['off'],
-      // 'vue/multi-word-component-names': ['off'],
-      // '@typescript-eslint/no-explicit-any': ['off'],
+      'vue/multi-word-component-names': [
+        'warn',
+        {
+          ignores: ['index'],
+        },
+      ],
+      '@typescript-eslint/no-explicit-any': ['off'],
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
       '@typescript-eslint/no-unused-vars': [
@@ -42,6 +46,7 @@ export default defineConfigWithVueTs(
         },
       ],
       // '@typescript-eslint/no-non-null-assertion': ['off'],
+      // 'vue/no-setup-props-destructure': ['off'],
     },
   },
 )
