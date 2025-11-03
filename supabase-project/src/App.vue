@@ -1,6 +1,32 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = 'https://pfezbxbambvjwwoluxkm.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmZXpieGJhbWJ2and3b2x1eGttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIwNjYwNzMsImV4cCI6MjA3NzY0MjA3M30.93nRluY6_I6IsV6LEjzi8F-5yE9SEFYbHwYI9L7RLU0'
+const supabase = createClient(supabaseUrl, supabaseKey)
+
+const { data: signInData, error: signInError }= await supabase.auth.signInWithPassword({
+  email: 'scliu.leo@outlook.com',
+  password: 'Supabase123!'
+})
+
+const { data: data, error: error } = await supabase
+  .from('user_info')
+  .insert([
+    {
+      first_name: 'Leo',
+      last_name: 'thinker',
+      age: 28,
+      user_id: signInData?.user?.id
+    }
+  ])
+  .select()
+
+console.log('数据:', data)
+console.log('错误:', error)
 </script>
 
 <template>
